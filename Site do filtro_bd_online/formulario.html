@@ -5,8 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/Style/style-avaliacao.css">
+    <link rel="stylesheet" href="/Style/style-notificacao.css">
     <title>Feedback</title>
-
 </head>
 
 <body>
@@ -24,7 +24,6 @@
         </nav>
     </header>
 
-
     <h2>Deixe seu Feedback sobre o Projeto</h2>
     <form id="feedbackForm">
         <label for="nome">Nome: (Obrigatório)</label><br />
@@ -39,6 +38,11 @@
 
         <button type="submit">Enviar Feedback</button>
     </form>
+
+    <!-- Notificação de sucesso -->
+    <div id="successNotification" class="notification">
+        Feedback enviado com sucesso!
+    </div>
 
     <script>
         document.getElementById('feedbackForm').addEventListener('submit', async function (e) {
@@ -62,7 +66,15 @@
             });
 
             if (response.ok) {
-                alert('Feedback enviado com sucesso!');
+                // Exibir notificação
+                const notification = document.getElementById('successNotification');
+                notification.classList.add('show');
+
+                // Esperar a animação da notificação terminar e redirecionar
+                setTimeout(function () {
+                    // Redirecionar para o index.html após 3 segundos
+                    window.location.href = '/index.html';
+                }, 3000); // Tempo de espera antes do redirecionamento
             } else {
                 alert('Erro ao enviar feedback');
             }
