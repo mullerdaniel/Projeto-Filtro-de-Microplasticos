@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/Style/style-avaliacao.css">
+    <title>Feedback</title>
+
+</head>
+
+<body>
+    <header>
+        <h1>Filtro de Microplásticos</h1>
+        <nav>
+            <ul>
+                <li><a href=".#funcionamento">Funcionamento</a></li>
+                <li><a href=".#motivos">Por Que Usar</a></li>
+                <li><a href=".#vantagens">Vantagens</a></li>
+                <li><a href=".#impacto">Impacto Ambiental</a></li>
+                <li><a href=".#ajuda">Como Ajudar</a></li>
+                <li><a href="/formulario.html">FeedBack</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <h2>Deixe seu Feedback sobre o Projeto</h2>
+    <form id="feedbackForm">
+        <label for="nome">Nome: (Obrigatório)</label><br />
+        <input type="text" id="nome" name="nome" required /><br /><br />
+
+        <label for="nota">Nota (0 a 10): (Obrigatório)</label><br />
+        <input type="number" id="nota" name="nota" min="0" max="10" required /><br /><br />
+
+        <label for="observacoes">Observações: (Opcional)</label><br />
+        <textarea id="observacoes" name="observacoes" rows="4" cols="50"
+            placeholder="Escreva suas observações aqui..."></textarea><br /><br />
+
+        <button type="submit">Enviar Feedback</button>
+    </form>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const nome = document.getElementById('nome').value;
+            const nota = document.getElementById('nota').value;
+            const observacoes = document.getElementById('observacoes').value;
+
+            // Enviar dados para o servidor Express
+            const response = await fetch('http://localhost:3000/submit-feedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nome,
+                    nota,
+                    observacoes
+                })
+            });
+
+            if (response.ok) {
+                alert('Feedback enviado com sucesso!');
+            } else {
+                alert('Erro ao enviar feedback');
+            }
+        });
+    </script>
+
+    <footer>
+        <p>Filtro Azul - Filtro de Microplásticos &copy; 2025</p>
+    </footer>
+</body>
+
+</html>
