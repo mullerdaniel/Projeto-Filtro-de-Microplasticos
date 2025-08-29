@@ -1,27 +1,21 @@
-// Importação das dependências
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
-const cors = require('cors');  // Importando o CORS
-const app = express();
+const cors = require('cors'); 
 
-// **Habilitando CORS para uma origem específica**
 app.use(cors({
-    origin: 'http://127.0.0.1:5500'  // Permitir apenas essa origem (o seu front-end)
+    origin: 'http://127.0.0.1:5500'  
 }));
 
-// Middleware para processar JSON no corpo da requisição
 app.use(bodyParser.json());
 
-// Configuração do banco de dados MySQL
 const db = mysql.createConnection({
-    host: 'localhost', // ou o host do seu banco de dados
-    user: 'root',      // seu usuário do MySQL
-    password: '',      // sua senha do MySQL
-    database: 'formulario'  // nome do banco de dados
+    host: 'localhost',
+    user: 'root',    
+    password: '',    
+    database: 'formulario' 
 });
 
-// Conectar ao banco de dados
 db.connect((err) => {
     if (err) {
         console.error('Erro ao conectar ao banco de dados: ', err);
@@ -30,11 +24,9 @@ db.connect((err) => {
     console.log('Conectado ao banco de dados MySQL');
 });
 
-// Rota para processar o feedback
 app.post('/submit-feedback', (req, res) => {
     const { nome, nota, observacoes } = req.body;
 
-    // Query SQL para inserir o feedback no banco de dados
     const query = 'INSERT INTO feedback (nome, nota, observacoes) VALUES (?, ?, ?)';
 
     db.execute(query, [nome, nota, observacoes], (err, results) => {
@@ -47,7 +39,6 @@ app.post('/submit-feedback', (req, res) => {
     });
 });
 
-// Iniciar servidor na porta 3000
 app.listen(3000, () => {
     console.log('Servidor rodando em http://localhost:3000');
 });
